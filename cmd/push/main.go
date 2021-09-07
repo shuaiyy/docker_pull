@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"ipull/pkg/code"
 	"ipull/pkg/exec"
@@ -46,9 +45,11 @@ func main() {
 	reader := bufio.NewReader(bytes.NewReader(c))
 	for {
 		line, err2 := reader.ReadString('\n')
-		if err2 != nil || io.EOF == err2 {
-			log.Print("read line error", err2)
-			break
+		if err2 != nil {
+			if line == "" {
+				log.Print("read line error", err2)
+				break
+			}
 		}
 		image := strings.TrimSpace(line)
 		if !strings.Contains(image, "gcr.io") &&
