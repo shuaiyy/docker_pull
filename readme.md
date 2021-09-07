@@ -15,3 +15,8 @@ GOOS=linux GOARCH=amd64 go build -o pull_amd64 cmd/pull/main.go
 go build -o pull_mac cmd/pull/main.go
 ./pull_mac -image k8s.gcr.io/pause:3.4.1
 ```
+
+## 自动触发workflow
+
+参考 https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+

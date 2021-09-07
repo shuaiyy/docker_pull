@@ -22,9 +22,8 @@ var imageFile string
 var (
 	repo = "registry.cn-shanghai.aliyuncs.com/shuaiyy/2233"
 	registry = "registry.cn-shanghai.aliyuncs.com"
-	// todo 获取密码
-	user = os.Getenv("")
-	key = os.Getenv("")
+	user = os.Getenv("DOCKER_USERNAME")
+	key = os.Getenv("DOCKER_PASSWORD")
 )
 
 

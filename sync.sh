@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./push_mac current_image_list.txt
+./push_amd64 current_image_list.txt
