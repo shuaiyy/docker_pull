@@ -22,8 +22,8 @@ var imageFile string
 var (
 	repo = "registry.cn-shanghai.aliyuncs.com/shuaiyy/2233"
 	registry = "registry.cn-shanghai.aliyuncs.com"
-	user = os.Getenv("DOCKER_USERNAME")
-	key = os.Getenv("DOCKER_PASSWORD")
+	user = os.Getenv("secrets.DOCKER_USERNAME")
+	key = os.Getenv("secrets.DOCKER_PASSWORD")
 )
 
 
@@ -41,7 +41,7 @@ func main() {
 	// step 1 login
 	if err = exec.DockerLogin(registry, user, key); err != nil{
 		log.Println(err)
-		return
+		//return
 	}
 	reader := bufio.NewReader(bytes.NewReader(c))
 	for {
