@@ -43,7 +43,7 @@ func ExecCommand(commandName string, params []string, isPrint bool) (string, err
 }
 
 func DockerLogin(register, user, pass string) error {
-	cmd := fmt.Sprintf("docker login %s -u %s -p %s", register, user, pass)
+	cmd := fmt.Sprintf("docker login --username=%s --password=%s %s", user, pass, register)
 	_, err := ExecCommand("bash", []string{"-c", cmd}, true)
 	return err
 }
@@ -79,7 +79,7 @@ func DockerRM(oldImage string) error {
 }
 
 func CtrPull(image, namespace string) error {
-	if namespace != ""{
+	if namespace != "" {
 		namespace = "-n " + namespace
 	}
 	cmd := fmt.Sprintf("ctr image %s pull %s", namespace, image)
@@ -88,7 +88,7 @@ func CtrPull(image, namespace string) error {
 }
 
 func CtrRetag(image, newImage, namespace string) error {
-	if namespace != ""{
+	if namespace != "" {
 		namespace = "-n " + namespace
 	}
 	cmd := fmt.Sprintf("ctr image %s tag %s %s", namespace, image, newImage)
