@@ -72,6 +72,12 @@ func DockerRetag(oldImage, newImage string) error {
 	return err
 }
 
+func DockerRM(oldImage string) error {
+	cmd := fmt.Sprintf("docker rmi %s", oldImage)
+	_, err := ExecCommand("bash", []string{"-c", cmd}, true)
+	return err
+}
+
 func CtrPull(image, namespace string) error {
 	if namespace != ""{
 		namespace = "-n " + namespace

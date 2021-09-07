@@ -47,6 +47,7 @@ func main() {
 	for {
 		line, err2 := reader.ReadString('\n')
 		if err2 != nil || io.EOF == err2 {
+			log.Print("read line error", err2)
 			break
 		}
 		image := strings.TrimSpace(line)

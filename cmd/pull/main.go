@@ -48,6 +48,10 @@ func main() {
 			log.Println(aliImage, image, err)
 			return
 		}
+		if err := exec.DockerRM(aliImage); err != nil{
+			log.Println(aliImage, err)
+			return
+		}
 	case "ctr", "containerd":
 		if err := exec.CtrPull(aliImage, namespace); err != nil{
 			log.Println(aliImage, namespace, err)
