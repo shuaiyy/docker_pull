@@ -1,1 +1,7 @@
 docker.io/kindest/node:v1.22.0
+docker.io/projectcontour/contour:v1.18.1
+docker.io/envoyproxy/envoy:v1.19.1
+docker.io/projectcontour/contour:v1.18.1
+docker.io/envoyproxy/envoy:v1.19.1
+docker.io/projectcontour/contour:v1.18.1
+docker.io/projectcontour/contour:v1.18.1
