@@ -1,2 +1,4 @@
 k8s.gcr.io/pause:3.4.1
 k8s.gcr.io/build-image/debian-base-amd64:buster-v1.8.0
+ghcr.io/openfaas/gateway:0.21.1
+ghcr.io/openfaas/basic-auth:0.21.1

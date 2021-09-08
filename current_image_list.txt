@@ -1,2 +1,1 @@
-ghcr.io/openfaas/gateway:0.21.1
-ghcr.io/openfaas/basic-auth:0.21.1
+kindest/node:v1.22.0
