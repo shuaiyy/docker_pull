@@ -25,5 +25,6 @@ jobs:
              echo $image
              tag=`./sha256_amd64 $image`
              skopeo copy  docker://${image} docker://registry.cn-shanghai.aliyuncs.com/shuaiyy/2233:${tag}  \
-             --dest-username=${{ secrets.DOCKER_USERNAME }} --dest-password=${{ secrets.DOCKER_PASSWORD }}
+             --dest-creds "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}"
+             # --dest-username=${{ secrets.DOCKER_USERNAME }} --dest-password=${{ secrets.DOCKER_PASSWORD }}
           done
