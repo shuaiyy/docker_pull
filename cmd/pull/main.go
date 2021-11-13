@@ -1,66 +1,34 @@
 package main
 
-/**
-通过阿里云容器仓库拉gcr镜像；
-需要先通过github action 将目标镜像同步至阿里云
- */
-
 import (
-	"flag"
+	"crypto/sha256"
 	"fmt"
-	"ipull/pkg/code"
-	"log"
-	"strings"
-
 	"ipull/pkg/exec"
+	"os"
+	"strings"
 )
-
-var (
-	cri   string
-	image string
-	namespace string
-)
-
-const aliRepo = "registry.cn-shanghai.aliyuncs.com/shuaiyy/2233"
-
-func init() {
-	flag.StringVar(&cri, "runtime", "docker", "容器运行时:docker|containerd|ctr|podman")
-	flag.StringVar(&image, "image", "", "镜像")
-	flag.StringVar(&namespace, "namespace", "", "镜像空间，for containerd")
-}
 
 func main() {
-	flag.Parse()
-	image = strings.TrimSpace(image)
-	if image == "" {
-		fmt.Println("please give a image")
+	if len(os.Args) != 2 {
+		fmt.Println("usage: ./pull {IMAGE}")
+		return
 	}
-	tag := code.UrlEncode(image)
-	fmt.Println(image, tag)
-	aliImage := fmt.Sprintf("%s:%s", aliRepo, tag)
-	switch cri {
-	case "docker":
-		if err := exec.DockerPull(aliImage); err != nil{
-			log.Println(aliImage, err)
-			return
-		}
-		if err := exec.DockerRetag(aliImage, image); err != nil{
-			log.Println(aliImage, image, err)
-			return
-		}
-		if err := exec.DockerRM(aliImage); err != nil{
-			log.Println(aliImage, err)
-			return
-		}
-	case "ctr", "containerd":
-		if err := exec.CtrPull(aliImage, namespace); err != nil{
-			log.Println(aliImage, namespace, err)
-			return
-		}
-		if err := exec.CtrRetag(aliImage, image, namespace); err != nil{
-			log.Println(aliImage, image, namespace, err)
-			return
-		}
+	image := strings.TrimSpace(os.Args[1])
+	aliImage := fmt.Sprintf("registry.cn-shanghai.aliyuncs.com/shuaiyy/2233:%s", Sha256(image))
+	if err := exec.DockerPull(aliImage); err != nil	{
+		fmt.Println(err)
+		return
 	}
+	newImage := strings.Split(image, "@")[0]
+	if err := exec.DockerRetag(aliImage, newImage); err != nil	{
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("ReTag:")
+	fmt.Println(newImage)
+	exec.DockerRM(aliImage)
 }
 
+func Sha256(s string) string {
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(s)))
+}
